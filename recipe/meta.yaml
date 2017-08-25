@@ -33,8 +33,10 @@ requirements:
     - vc 14  # [win and py>=35]
     - cairo 1.14.*
     - python
-    - xorg-libx11 1.6.*
-    - xorg-xproto
+    - {{ cdt('xorg-x11-proto-devel') }}
+    - {{ cdt('libx11-devel') }}
+    - {{ cdt('libxcb') }}
+    - {{ cdt('libxau') }}
   run:
     - vc 9  # [win and py27]
     - vc 10  # [win and py34]
