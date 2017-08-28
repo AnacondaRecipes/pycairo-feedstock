@@ -24,6 +24,10 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ cdt('xorg-x11-proto-devel') }}
+    - {{ cdt('libx11-devel') }}
+    - {{ cdt('libxcb') }}
+    - {{ cdt('libxau') }}
     - m2w64-pkg-config  # [win]
     - m2w64-toolchain  # [win]
     - pkg-config  # [not win]
@@ -33,10 +37,6 @@ requirements:
     - vc 14  # [win and py>=35]
     - cairo 1.14.*
     - python
-    - {{ cdt('xorg-x11-proto-devel') }}
-    - {{ cdt('libx11-devel') }}
-    - {{ cdt('libxcb') }}
-    - {{ cdt('libxau') }}
   run:
     - vc 9  # [win and py27]
     - vc 10  # [win and py34]
