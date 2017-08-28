@@ -24,10 +24,10 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
-    - {{ cdt('xorg-x11-proto-devel') }}
-    - {{ cdt('libx11-devel') }}
-    - {{ cdt('libxcb') }}
-    - {{ cdt('libxau') }}
+    - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
+    - {{ cdt('libx11-devel') }}          # [linux]
+    - {{ cdt('libxcb') }}                # [linux]
+    - {{ cdt('libxau') }}                # [linux]
     - m2w64-pkg-config  # [win]
     - m2w64-toolchain  # [win]
     - pkg-config  # [not win]
