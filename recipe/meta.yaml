@@ -14,12 +14,7 @@ source:
     - windows.patch  # [win]
 
 build:
-  number: 0
-  detect_binary_files_with_prefix: true
-  features:
-    - vc9  # [win and py27]
-    - vc10  # [win and py34]
-    - vc14  # [win and py>=35]
+  number: 1
 
 requirements:
   build:
@@ -32,16 +27,10 @@ requirements:
     - m2w64-toolchain  # [win]
     - pkg-config  # [not win]
     - posix  # [win]
-    - vc 9  # [win and py27]
-    - vc 10  # [win and py34]
-    - vc 14  # [win and py>=35]
-    - cairo 1.14.*
+  host:
+    - cairo
     - python
   run:
-    - vc 9  # [win and py27]
-    - vc 10  # [win and py34]
-    - vc 14  # [win and py>=35]
-    - cairo 1.14.*
     - python
 
 test:
