@@ -1,13 +1,12 @@
 {% set name = "pycairo" %}
-{% set version = "1.13.3" %}
-{% set sha256 = "2f2ae1acdc7197e4df58e458a0279de206f989972edfe06d54e99d9e5b839938" %}
+{% set version = "1.15.4" %}
+{% set sha256 = "ee4c3068c048230e5ce74bb8994a024711129bde1af1d76e3276c7acd81c4357" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://github.com/pygobject/pycairo/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
