@@ -1,35 +1,39 @@
 {% set name = "pycairo" %}
-{% set version = "1.15.4" %}
-{% set sha256 = "ee4c3068c048230e5ce74bb8994a024711129bde1af1d76e3276c7acd81c4357" %}
+{% set version = "1.17.1" %}
+{% set sha256 = "0f0a35ec923d87bc495f6753b1e540fd046d95db56a35250c44089fbce03b698" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
+  fn: {{ name }}-{{ version }}.tar.gz
   url: https://github.com/pygobject/pycairo/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
     - windows.patch  # [win]
 
 build:
-  number: 1
+  number: 0
+  detect_binary_files_with_prefix: true
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - m2w64-toolchain  # [win]
     - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
     - {{ cdt('libx11-devel') }}          # [linux]
     - {{ cdt('libxcb') }}                # [linux]
     - {{ cdt('libxau') }}                # [linux]
-    - m2w64-pkg-config  # [win]
-    - m2w64-toolchain  # [win]
-    - pkg-config  # [not win]
-    - posix  # [win]
+    - pkg-config                         # [not win]
+    - m2w64-pkg-config                   # [win]
   host:
+    - m2w64-pkg-config                   # [win]
     - cairo
+    - pthread-stubs
     - python
   run:
+    - cairo
     - python
 
 test:
