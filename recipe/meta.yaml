@@ -39,9 +39,6 @@ requirements:
 test:
   imports:
     - cairo
-  commands:
-    - conda inspect linkages -p $PREFIX $PKG_NAME  # [not win]
-    - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
 
 about:
   home: http://cairographics.org/pycairo/
