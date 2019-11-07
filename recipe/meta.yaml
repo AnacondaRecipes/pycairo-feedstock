@@ -1,13 +1,12 @@
 {% set name = "pycairo" %}
-{% set version = "1.18.1" %}
-{% set sha256 = "70172e58b6bad7572a3518c26729b074acdde15e6fee6cbab6d3528ad552b786" %}
+{% set version = "1.18.2" %}
+{% set sha256 = "dcb853fd020729516e8828ad364084e752327d4cff8505d20b13504b32b16531" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://github.com/pygobject/pycairo/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
@@ -30,6 +29,8 @@ requirements:
   host:
     - m2w64-pkg-config                   # [win]
     - cairo
+    - cython
+    - pip
     - pthread-stubs
     - python
   run:
