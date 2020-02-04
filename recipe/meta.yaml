@@ -1,6 +1,6 @@
 {% set name = "pycairo" %}
-{% set version = "1.18.2" %}
-{% set sha256 = "dcb853fd020729516e8828ad364084e752327d4cff8505d20b13504b32b16531" %}
+{% set version = "1.19.0" %}
+{% set sha256 = "4f5ba9374a46c98729dd3727d993f5e17ed0286fd6738ed464fe4efa0612d19c" %}
 
 package:
   name: {{ name }}
@@ -15,19 +15,20 @@ source:
 build:
   number: 0
   detect_binary_files_with_prefix: true
+  skip: true  # [py < 35]
 
 requirements:
   build:
+    - pkg-config  # [not win]
     - {{ compiler('c') }}
     - m2w64-toolchain  # [win]
     - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
     - {{ cdt('libx11-devel') }}          # [linux]
     - {{ cdt('libxcb') }}                # [linux]
     - {{ cdt('libxau') }}                # [linux]
-    - pkg-config                         # [not win]
     - m2w64-pkg-config                   # [win]
   host:
-    - m2w64-pkg-config                   # [win]
+    - m2w64-pkg-config  # [win]
     - cairo
     - cython
     - pip
