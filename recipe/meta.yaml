@@ -26,6 +26,8 @@ requirements:
     - {{ cdt('libx11-devel') }}          # [linux]
     - {{ cdt('libxcb') }}                # [linux]
     - {{ cdt('libxau') }}                # [linux]
+    - {{ cdt('libxau-devel') }}          # [linux and aarch64]
+    - {{ cdt('libxext-devel') }}         # [linux and aarch64]
     - m2w64-pkg-config                   # [win]
   host:
     - m2w64-pkg-config  # [win]
