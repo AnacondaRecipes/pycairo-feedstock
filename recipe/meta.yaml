@@ -30,7 +30,7 @@ requirements:
     - {{ cdt('libxext-devel') }}         # [linux and aarch64]
     - m2w64-pkg-config                   # [win]
     - m2-patch    # [win]
-   host:
+  host:
     - m2w64-pkg-config  # [win]
     - cairo
     - cython
