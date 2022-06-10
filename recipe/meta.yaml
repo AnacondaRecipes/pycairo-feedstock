@@ -19,6 +19,7 @@ build:
   ignore_run_exports:
     - glib
     - python
+    - pixman
 
 requirements:
   build:
@@ -34,6 +35,8 @@ requirements:
     - {{ cdt('libxau-devel') }}          # [linux and aarch64]
     - {{ cdt('libxext-devel') }}         # [linux and aarch64]
     - pthread-stubs
+    - patch     # [not win]
+    - m2-patch  # [win]
   host:
     - cairo >=1.15.10
     - flake8  # for testing during the build
