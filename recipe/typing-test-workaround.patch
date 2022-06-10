@@ -11,6 +11,3 @@ index 0d16f0b..53d7877 100644
                  continue
              if key.startswith("_"):
                  continue
-© 2022 GitHub, Inc.
-Terms
-Privacy
