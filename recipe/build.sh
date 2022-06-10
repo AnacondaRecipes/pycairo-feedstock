@@ -8,6 +8,8 @@ set -e
 # Without them, `pycairo` will not be found and might be built as an in-tree subproject
 # which is obviously undesirable.
 
+export PKG_CONFIG_PATH=${PKG_CONFIG_PATH:-}:${PREFIX}/lib/pkgconfig:$BUILD_PREFIX/$BUILD/sysroot/usr/lib64/pkgconfig:$BUILD_PREFIX/$BUILD/sysroot/usr/share/pkgconfig
+
 # meson options
 meson_config_args=(
   --prefix="$PREFIX"

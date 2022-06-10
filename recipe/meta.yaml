@@ -27,14 +27,18 @@ requirements:
     - pkg-config
     - meson >=0.53.0
     - {{ compiler('c') }}
-    - m2w64-toolchain  # [win]
+    - pthread-stubs                      # [linux]
+    - {{ cdt('libxau-devel') }}          # [linux]
+    - {{ cdt('libxau') }}                # [linux]
+    - {{ cdt('libxcb') }}                # [linux]
+    - {{ cdt('xorg-x11-util-macros') }}  # [linux]
     - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
     - {{ cdt('libx11-devel') }}          # [linux]
-    - {{ cdt('libxcb') }}                # [linux]
-    - {{ cdt('libxau') }}                # [linux]
-    - {{ cdt('libxau-devel') }}          # [linux and aarch64]
-    - {{ cdt('libxext-devel') }}         # [linux and aarch64]
-    - pthread-stubs
+    - {{ cdt('libx11-common') }}         # [linux]
+    - {{ cdt('libx11') }}                # [linux]
+    - {{ cdt('libxext-devel') }}         # [linux]
+    - {{ cdt('libxext') }}               # [linux]
+    - {{ cdt('libxrender-devel') }}      # [linux]
     - patch     # [not win]
     - m2-patch  # [win]
   host:
