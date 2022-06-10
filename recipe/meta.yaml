@@ -1,6 +1,6 @@
 {% set name = "pycairo" %}
-{% set version = "1.19.1" %}
-{% set sha256 = "2c143183280feb67f5beb4e543fd49990c28e7df427301ede04fc550d3562e84" %}
+{% set version = "1.21.0" %}
+{% set sha256 = "251907f18a552df938aa3386657ff4b5a4937dde70e11aa042bc297957f4b74b" %}
 
 package:
   name: {{ name }}
@@ -10,16 +10,21 @@ source:
   url: https://github.com/pygobject/pycairo/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
-    - windows.patch  # [win]
+    - typing-test-workaround.patch
 
 build:
   number: 0
   detect_binary_files_with_prefix: true
-  skip: true  # [py < 35]
+  skip: true  # [py < 37]
+  ignore_run_exports:
+    - glib
+    - python
 
 requirements:
   build:
-    - pkg-config  # [not win]
+    - python
+    - pkg-config
+    - meson >=0.53.0
     - {{ compiler('c') }}
     - m2w64-toolchain  # [win]
     - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
@@ -28,14 +33,12 @@ requirements:
     - {{ cdt('libxau') }}                # [linux]
     - {{ cdt('libxau-devel') }}          # [linux and aarch64]
     - {{ cdt('libxext-devel') }}         # [linux and aarch64]
-    - m2w64-pkg-config                   # [win]
-    - m2-patch    # [win]
-  host:
-    - m2w64-pkg-config  # [win]
-    - cairo
-    - cython
-    - pip
     - pthread-stubs
+  host:
+    - cairo >=1.15.10
+    - flake8  # for testing during the build
+    - glib
+    - pytest  # for testing during the build
     - python
   run:
     - cairo
@@ -44,13 +47,29 @@ requirements:
 test:
   imports:
     - cairo
+  requires:
+    - pkg-config
+  commands:
+    # verify the pkgconfig files get installed
+    - test -f $PREFIX/lib/pkgconfig/py3cairo.pc  # [unix]
+    - if not exist %LIBRARY_LIB%\\pkgconfig\\py3cairo.pc exit 1  # [win]
+
+    # verify that the header can be located through pkg-config
+    - test -f `pkg-config --variable=includedir --dont-define-prefix py3cairo`/pycairo/py3cairo.h  # [unix]
+    - for /f "usebackq tokens=*" %%a in (`pkg-config --variable=includedir --dont-define-prefix py3cairo`) do if not exist "%%a/pycairo/py3cairo.h" exit 1  # [win]
 
 about:
-  home: http://cairographics.org/pycairo/
-  license: LGPL 2.1, MPL 1.1
-  license_file: COPYING
-  summary: 'Python bindings for the Cairo graphics library.'
-  dev_url: https://github.com/pygobject/pycairo/
+  home: https://www.cairographics.org/pycairo/
+  license: LGPL-2.1-only OR MPL-1.1
+  license_file: 
+    - COPYING
+    - COPYING-LGPL-2.1
+    - COPYING-MPL-1.1
+  license_family: LGPL
+  summary: Python bindings for the Cairo graphics library.
+  dev_url: https://github.com/pygobject/pycairo
+  doc_url: https://pycairo.readthedocs.io/en/latest/index.html
+  doc_source_url: https://github.com/pygobject/pycairo/tree/master/docs
 
 extra:
   recipe-maintainers:
