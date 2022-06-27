@@ -15,7 +15,7 @@ source:
 build:
   number: 0
   detect_binary_files_with_prefix: true
-  skip: true  # [py < 37]
+  skip: true  # [py<37]
   ignore_run_exports:
     - glib
     - python
@@ -47,6 +47,8 @@ requirements:
     - glib
     - pytest  # for testing during the build
     - python
+    - setuptools
+    - wheel
   run:
     - cairo
     - python
