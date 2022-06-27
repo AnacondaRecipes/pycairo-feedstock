@@ -27,10 +27,13 @@ if errorlevel 1 exit 1
 meson configure builddir
 if errorlevel 1 exit 1
 
-ninja -v -C builddir
+meson compile -v -C builddir -j %CPU_COUNT%
 if errorlevel 1 exit 1
 
-ninja -C builddir install
+meson test -C builddir --print-errorlogs --timeout-multiplier 10 --num-processes %CPU_COUNT%
+if errorlevel 1 exit 1
+
+meson install -C builddir
 if errorlevel 1 exit 1
 
 :: meson doesn't put the Python files in the right place, and there's no way to override
