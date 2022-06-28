@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -e
+set -ex
 
 # We're using the meson build system as opposed to 'pip install .' because it provides
 # the pkg-config files for `pycairo`. These are used by downstream packages (notably
@@ -8,7 +8,9 @@ set -e
 # Without them, `pycairo` will not be found and might be built as an in-tree subproject
 # which is obviously undesirable.
 
-export PKG_CONFIG_PATH=${PKG_CONFIG_PATH:-}:${PREFIX}/lib/pkgconfig:$BUILD_PREFIX/$BUILD/sysroot/usr/lib64/pkgconfig:$BUILD_PREFIX/$BUILD/sysroot/usr/share/pkgconfig
+# ppc64le cdt need to be rebuilt with files in powerpc64le-conda-linux-gnu instead of powerpc64le-conda_cos7-linux-gnu. In the mean time:
+ppc64le_current=$BUILD_PREFIX/powerpc64le-conda_cos7-linux-gnu/sysroot/usr/lib64/pkgconfig:$BUILD_PREFIX/powerpc64le-conda_cos7-linux-gnu/sysroot/usr/share/pkgconfig
+export PKG_CONFIG_PATH=${PKG_CONFIG_PATH:-}:${PREFIX}/lib/pkgconfig:$BUILD_PREFIX/$BUILD/sysroot/usr/lib64/pkgconfig:$BUILD_PREFIX/$BUILD/sysroot/usr/share/pkgconfig:$ppc64le_current
 
 # meson options
 meson_config_args=(
