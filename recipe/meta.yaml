@@ -1,6 +1,6 @@
 {% set name = "pycairo" %}
-{% set version = "1.21.0" %}
-{% set sha256 = "251907f18a552df938aa3386657ff4b5a4937dde70e11aa042bc297957f4b74b" %}
+{% set version = "1.23.0" %}
+{% set sha256 = "9b61ac818723adc04367301317eb2e814a83522f07bbd1f409af0dada463c44c" %}
 
 package:
   name: {{ name }}
