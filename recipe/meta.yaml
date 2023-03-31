@@ -31,15 +31,15 @@ requirements:
     - patch     # [not win]
     - m2-patch  # [win]
   host:
-    - cairo >=1.15.10
-    - flake8  # for testing during the build
-    - glib
-    - pytest  # for testing during the build
+    - cairo 1.16.0
+    - flake8 6.0.0 # for testing during the build
+    - glib {{glib}}
+    - pytest 7.1.2 # for testing during the build
     - python
     - setuptools
     - wheel
   run:
-    - cairo
+    - cairo >=1.15.10
     - python
 
 test:
