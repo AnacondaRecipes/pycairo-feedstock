@@ -35,15 +35,3 @@ if errorlevel 1 exit 1
 
 meson install -C builddir
 if errorlevel 1 exit 1
-
-:: meson doesn't put the Python files in the right place, and there's no way to override
-:: (py* catches both python* and pypy*)
-:: remove this section once we switch to meson >= 0.63
-cd %LIBRARY_PREFIX%\lib\py*
-if errorlevel 1 exit 1
-cd site-packages
-if errorlevel 1 exit 1
-move *.egg-info %PREFIX%\Lib\site-packages
-if errorlevel 1 exit 1
-move cairo %PREFIX%\Lib\site-packages\cairo
-if errorlevel 1 exit 1
