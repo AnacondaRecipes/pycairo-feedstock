@@ -1,6 +1,6 @@
 {% set name = "pycairo" %}
-{% set version = "1.21.0" %}
-{% set sha256 = "251907f18a552df938aa3386657ff4b5a4937dde70e11aa042bc297957f4b74b" %}
+{% set version = "1.23.0" %}
+{% set sha256 = "9b61ac818723adc04367301317eb2e814a83522f07bbd1f409af0dada463c44c" %}
 
 package:
   name: {{ name }}
@@ -14,12 +14,7 @@ source:
 
 build:
   number: 0
-  detect_binary_files_with_prefix: true
   skip: true  # [py<37]
-  ignore_run_exports:
-    - glib
-    - python
-    - pixman
 
 requirements:
   build:
@@ -36,15 +31,15 @@ requirements:
     - patch     # [not win]
     - m2-patch  # [win]
   host:
-    - cairo >=1.15.10
-    - flake8  # for testing during the build
-    - glib
-    - pytest  # for testing during the build
+    - cairo 1.16.0
+    - flake8 6.0.0 # for testing during the build
+    - glib {{glib}}
+    - pytest 7.1.2 # for testing during the build
     - python
     - setuptools
     - wheel
   run:
-    - cairo
+    - cairo >=1.16.0,<2.0a0
     - python
 
 test:
@@ -70,9 +65,12 @@ about:
     - COPYING-MPL-1.1
   license_family: LGPL
   summary: Python bindings for the Cairo graphics library.
+  description: |
+    Pycairo is a Python module providing bindings for the cairo graphics library.
+    The Pycairo bindings are designed to match the cairo C API as closely as possible, and to 
+    deviate only in cases which are clearly better implemented in a more ‘Pythonic’ way.
   dev_url: https://github.com/pygobject/pycairo
   doc_url: https://pycairo.readthedocs.io/en/latest/index.html
-  doc_source_url: https://github.com/pygobject/pycairo/tree/master/docs
 
 extra:
   recipe-maintainers:
