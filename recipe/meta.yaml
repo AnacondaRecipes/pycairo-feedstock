@@ -13,7 +13,7 @@ source:
     - typing-test-workaround.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<37]
 
 requirements:
@@ -22,19 +22,14 @@ requirements:
     - pkg-config
     - meson >=0.53.0
     - {{ compiler('c') }}
-    - pthread-stubs                      # [linux]
-    - {{ cdt('libxau-devel') }}          # [linux]
-    - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
-    - {{ cdt('libx11-devel') }}          # [linux]
-    - {{ cdt('libxext-devel') }}         # [linux]
-    - {{ cdt('libxrender-devel') }}      # [linux]
+    - pthread-stubs  # [linux]
     - patch     # [not win]
     - m2-patch  # [win]
   host:
-    - cairo 1.16.0
-    - flake8 6.0.0 # for testing during the build
+    - cairo {{cairo}}
+    - flake8  # for testing during the build
     - glib {{glib}}
-    - pytest 7.1.2 # for testing during the build
+    - pytest  # for testing during the build
     - python
     - setuptools
     - wheel
@@ -51,15 +46,14 @@ test:
     # verify the pkgconfig files get installed
     - test -f $PREFIX/lib/pkgconfig/py3cairo.pc  # [unix]
     - if not exist %LIBRARY_LIB%\\pkgconfig\\py3cairo.pc exit 1  # [win]
-
     # verify that the header can be located through pkg-config
     - test -f `pkg-config --variable=includedir --dont-define-prefix py3cairo`/pycairo/py3cairo.h  # [unix]
-    - for /f "usebackq tokens=*" %%a in (`pkg-config --variable=includedir --dont-define-prefix py3cairo`) do if not exist "%%a/pycairo/py3cairo.h" exit 1  # [win]
+    - "for /f \"usebackq tokens=*\" %%a in (`pkg-config --variable=includedir --dont-define-prefix py3cairo`) do if not exist \"%%a/pycairo/py3cairo.h\" exit 1"  # [win]
 
 about:
   home: https://www.cairographics.org/pycairo/
   license: LGPL-2.1-only OR MPL-1.1
-  license_file: 
+  license_file:
     - COPYING
     - COPYING-LGPL-2.1
     - COPYING-MPL-1.1
@@ -67,8 +61,8 @@ about:
   summary: Python bindings for the Cairo graphics library.
   description: |
     Pycairo is a Python module providing bindings for the cairo graphics library.
-    The Pycairo bindings are designed to match the cairo C API as closely as possible, and to 
-    deviate only in cases which are clearly better implemented in a more ‘Pythonic’ way.
+    The Pycairo bindings are designed to match the cairo C API as closely as possible, and to
+    deviate only in cases which are clearly better implemented in a more 'Pythonic' way.
   dev_url: https://github.com/pygobject/pycairo
   doc_url: https://pycairo.readthedocs.io/en/latest/index.html
 
