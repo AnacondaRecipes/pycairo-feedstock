@@ -33,8 +33,6 @@ requirements:
     - python
     - setuptools
     - wheel
-    # for pkg-config files
-    - xorg-xorgproto   # [linux]
   run:
     - cairo >=1.16.0,<2.0a0
     - python
