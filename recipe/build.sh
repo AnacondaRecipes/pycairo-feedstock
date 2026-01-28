@@ -19,10 +19,10 @@ export PKG_CONFIG_PATH=${PKG_CONFIG_PATH:-}:${PREFIX}/lib/pkgconfig:$BUILD_PREFI
 meson_config_args=(
   --prefix="$PREFIX"
   --wrap-mode=nofallback
-  --buildtype=release
   --backend=ninja
   -Dlibdir=lib
   -D python="$PYTHON"
+  -Dbuildtype=release
 )
 
 # configure build using meson
@@ -32,13 +32,13 @@ meson compile -v -C builddir -j ${CPU_COUNT}
 
 # Skip tests for Python 3.13 due to known compatibility issues with set_mime_data functionality
 # See: https://github.com/pygobject/pycairo/issues/366
-PYTHON_VERSION=$($PYTHON -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
-if [[ "$PYTHON_VERSION" != "3.13" ]]; then
-  meson test -C builddir --print-errorlogs --timeout-multiplier 10 --num-processes ${CPU_COUNT}
-else
-  # SystemError: /var/folders/.../Objects/abstract.c:430: bad argument to internal function,
-  # See: https://github.com/pygobject/pycairo/blob/v1.26.1/NEWS#L5-L9
-  echo "Skipping tests for Python 3.13 due to known compatibility issues with set_mime_data functionality"
-fi
+# PYTHON_VERSION=$($PYTHON -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+# if [[ "$PYTHON_VERSION" != "3.13" ]]; then
+meson test -C builddir --print-errorlogs --timeout-multiplier 10 --num-processes ${CPU_COUNT}
+# else
+#   # SystemError: /var/folders/.../Objects/abstract.c:430: bad argument to internal function,
+#   # See: https://github.com/pygobject/pycairo/blob/v1.26.1/NEWS#L5-L9
+#   echo "Skipping tests for Python 3.13 due to known compatibility issues with set_mime_data functionality"
+# fi
 
 meson install -C builddir

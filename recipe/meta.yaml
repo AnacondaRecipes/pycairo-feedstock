@@ -1,6 +1,5 @@
 {% set name = "pycairo" %}
 {% set version = "1.29.0" %}
-{% set sha256 = "f3f7fde97325cae80224c09f12564ef58d0d0f655da0e3b040f5807bd5bd3142" %}
 
 package:
   name: {{ name }}
@@ -8,7 +7,7 @@ package:
 
 source:
   url: https://github.com/pygobject/pycairo/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: f3f7fde97325cae80224c09f12564ef58d0d0f655da0e3b040f5807bd5bd3142
   patches:
     - typing-test-workaround.patch
 
@@ -18,24 +17,23 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
+    - {{ compiler('c') }}
     - python
     - pkg-config
-    - meson >=0.53.0
-    - {{ compiler('c') }}
+    - meson >=0.64.0
     - pthread-stubs  # [linux]
-    - patch  # [not win]
-    - m2-patch  # [win]
   host:
-    - cairo {{cairo}}
-    - flake8  # for testing during the build
-    - glib {{glib}}
-    - pytest  # for testing during the build
+    - pip
     - python
     - meson-python >=0.16.0
-    - poetry-core
-    - pip
+    - poetry-core >=2.2
+    - cairo {{ cairo }}
+    - glib {{ glib }}
+    - pytest  # for testing during the build
+    - flake8  # for testing during the build
   run:
-    - cairo >=1.16.0,<2.0a0
+    - cairo >=1.18.4,<2.0a0
     - python
 
 test:
@@ -49,10 +47,10 @@ test:
     - if not exist %LIBRARY_LIB%\\pkgconfig\\py3cairo.pc exit 1  # [win]
     # verify that the header can be located through pkg-config
     - test -f `pkg-config --variable=includedir --dont-define-prefix py3cairo`/pycairo/py3cairo.h  # [unix]
-    - for /f "usebackq tokens=*" %%a in (`pkg-config --variable=includedir --dont-define-prefix py3cairo`) do if not exist "%%a/pycairo/py3cairo.h" exit 1  # [win]
+    - "for /f \"usebackq tokens=*\" %%a in (`pkg-config --variable=includedir --dont-define-prefix py3cairo`) do if not exist \"%%a/pycairo/py3cairo.h\" exit 1"  # [win]
 
 about:
-  home: https://www.cairographics.org/pycairo/
+  home: https://www.cairographics.org/pycairo
   license: LGPL-2.1-only OR MPL-1.1
   license_file:
     - COPYING
