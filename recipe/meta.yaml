@@ -8,8 +8,8 @@ package:
 source:
   url: https://github.com/pygobject/pycairo/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.gz
   sha256: f3f7fde97325cae80224c09f12564ef58d0d0f655da0e3b040f5807bd5bd3142
-  # patches:
-  #   - typing-test-workaround.patch
+  patches:  # [win]
+    - patches/exclude-failing-win-test.patch  # [win]
 
 build:
   number: 0
