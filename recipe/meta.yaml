@@ -22,7 +22,6 @@ requirements:
     - python
     - pkg-config
     - meson >=0.64.0
-    - pthread-stubs  # [linux]
   host:
     - pip
     - python
@@ -30,8 +29,8 @@ requirements:
     - poetry-core >=2.2
     - cairo {{ cairo }}
     - glib {{ glib }}
-    - pytest  # for testing during the build
-    - flake8  # for testing during the build
+    - pytest >=8.3.0,<10 # for testing during the build
+    - flake8 >=7.0.0,<8 # for testing during the build
   run:
     - cairo >=1.18.4,<2.0a0
     - python

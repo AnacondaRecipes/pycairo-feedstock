@@ -1,7 +1,7 @@
 From cef5b864b8fca7b67aed95f6e580fe06838fa93d Mon Sep 17 00:00:00 2001
 From: Patryk Kups <pkups@anaconda.com>
 Date: Wed, 28 Jan 2026 11:38:38 +0100
-Subject: [PATCH] exclude failing win test
+Subject: [PATCH] patch
 
 ---
  tests/test_surface.py | 33 ++++++++++++++++++++++++---------
