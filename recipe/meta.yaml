@@ -1,6 +1,5 @@
 {% set name = "pycairo" %}
-{% set version = "1.23.0" %}
-{% set sha256 = "9b61ac818723adc04367301317eb2e814a83522f07bbd1f409af0dada463c44c" %}
+{% set version = "1.29.0" %}
 
 package:
   name: {{ name }}
@@ -8,33 +7,32 @@ package:
 
 source:
   url: https://github.com/pygobject/pycairo/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
-  patches:
-    - typing-test-workaround.patch
+  sha256: f3f7fde97325cae80224c09f12564ef58d0d0f655da0e3b040f5807bd5bd3142
+  patches:  # [win]
+    - patches/exclude-failing-win-test.patch  # [win]
 
 build:
-  number: 1
-  skip: true  # [py<37]
+  number: 0
+  skip: true  # [py<310]
 
 requirements:
   build:
+    - {{ stdlib('c') }}
+    - {{ compiler('c') }}
     - python
     - pkg-config
-    - meson >=0.53.0
-    - {{ compiler('c') }}
-    - pthread-stubs  # [linux]
-    - patch     # [not win]
-    - m2-patch  # [win]
+    - meson >=0.64.0
   host:
-    - cairo {{cairo}}
-    - flake8  # for testing during the build
-    - glib {{glib}}
-    - pytest  # for testing during the build
+    - pip
     - python
-    - setuptools
-    - wheel
+    - meson-python >=0.16.0
+    - poetry-core >=2.2
+    - cairo {{ cairo }}
+    - glib {{ glib }}
+    - pytest >=8.3.0,<10 # for testing during the build
+    - flake8 >=7.0.0,<8 # for testing during the build
   run:
-    - cairo >=1.16.0,<2.0a0
+    - cairo >=1.18.4,<2.0a0
     - python
 
 test:
@@ -51,7 +49,7 @@ test:
     - "for /f \"usebackq tokens=*\" %%a in (`pkg-config --variable=includedir --dont-define-prefix py3cairo`) do if not exist \"%%a/pycairo/py3cairo.h\" exit 1"  # [win]
 
 about:
-  home: https://www.cairographics.org/pycairo/
+  home: https://www.cairographics.org/pycairo
   license: LGPL-2.1-only OR MPL-1.1
   license_file:
     - COPYING
@@ -64,7 +62,7 @@ about:
     The Pycairo bindings are designed to match the cairo C API as closely as possible, and to
     deviate only in cases which are clearly better implemented in a more 'Pythonic' way.
   dev_url: https://github.com/pygobject/pycairo
-  doc_url: https://pycairo.readthedocs.io/en/latest/index.html
+  doc_url: https://pycairo.readthedocs.io
 
 extra:
   recipe-maintainers:
