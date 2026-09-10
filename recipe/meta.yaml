@@ -1,5 +1,5 @@
 {% set name = "pycairo" %}
-{% set version = "1.29.0" %}
+{% set version = "1.29.1" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/pygobject/pycairo/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.gz
-  sha256: f3f7fde97325cae80224c09f12564ef58d0d0f655da0e3b040f5807bd5bd3142
+  sha256: 4fbd26b4af24c9787d84cf5448e34eb8dca064b732479aaecd03109520eebd5f
   patches:  # [win]
     - patches/exclude-failing-win-test.patch  # [win]
 
@@ -21,16 +21,17 @@ requirements:
     - {{ compiler('c') }}
     - python
     - pkg-config
-    - meson >=0.64.0
+    - ninja-base >=1.8.2  # [not win]
   host:
     - pip
     - python
+    - meson >=0.64.0
     - meson-python >=0.16.0
     - poetry-core >=2.2
     - cairo {{ cairo }}
     - glib {{ glib }}
-    - pytest >=8.3.0,<10 # for testing during the build
-    - flake8 >=7.0.0,<8 # for testing during the build
+    - pytest >=8.3.0,<10  # for testing during the build
+    - flake8 >=7.0.0,<8  # for testing during the build
   run:
     - cairo >=1.18.4,<2.0a0
     - python
@@ -46,7 +47,7 @@ test:
     - if not exist %LIBRARY_LIB%\\pkgconfig\\py3cairo.pc exit 1  # [win]
     # verify that the header can be located through pkg-config
     - test -f `pkg-config --variable=includedir --dont-define-prefix py3cairo`/pycairo/py3cairo.h  # [unix]
-    - "for /f \"usebackq tokens=*\" %%a in (`pkg-config --variable=includedir --dont-define-prefix py3cairo`) do if not exist \"%%a/pycairo/py3cairo.h\" exit 1"  # [win]
+    - for /f "usebackq tokens=*" %%a in (`pkg-config --variable=includedir --dont-define-prefix py3cairo`) do if not exist "%%a/pycairo/py3cairo.h" exit 1  # [win]
 
 about:
   home: https://www.cairographics.org/pycairo
