@@ -2,7 +2,7 @@
 
 set -ex
 
-# We're using the meson build system as opposed to 'pip install .' because it provides
+# We're using the meson build system instead of pip because it provides
 # the pkg-config files for `pycairo`. These are used by downstream packages (notably
 # `pygobject`) that also use the meson build system in order to locate `pycairo`.
 # Without them, `pycairo` will not be found and might be built as an in-tree subproject
