@@ -21,11 +21,11 @@ requirements:
     - {{ compiler('c') }}
     - python
     - pkg-config
+    - meson >=0.64.0
     - ninja-base >=1.8.2  # [not win]
   host:
     - pip
     - python
-    - meson >=0.64.0
     - meson-python >=0.16.0
     - poetry-core >=2.2
     - cairo {{ cairo }}
@@ -68,3 +68,5 @@ about:
 extra:
   recipe-maintainers:
     - pkgw
+  skip-lints:
+    - python_build_tools_in_host
