@@ -35,3 +35,8 @@ if errorlevel 1 exit 1
 
 meson install -C builddir
 if errorlevel 1 exit 1
+
+:: The MSVC import library generated for the extension module
+:: (Lib/site-packages/cairo/_cairo.cp3xx-win_*.lib) is a link artifact, not part
+:: of the runtime package; drop it before packaging.
+del /q "%SP_DIR%\cairo\*.lib" 2>nul

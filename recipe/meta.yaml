@@ -29,7 +29,8 @@ requirements:
     - meson-python >=0.16.0
     - poetry-core >=2.2
     - cairo {{ cairo }}
-    - glib {{ glib }}
+    # No glib here: pycairo binds cairo only, and the installed cairo.pc has no
+    # Requires line, so a host glib only injected an unused libglib run export.
     - pytest >=8.3.0,<10  # for testing during the build
     - flake8 >=7.0.0,<8  # for testing during the build
   run:
@@ -56,7 +57,7 @@ about:
     - COPYING
     - COPYING-LGPL-2.1
     - COPYING-MPL-1.1
-  license_family: LGPL
+  license_family: Other
   summary: Python bindings for the Cairo graphics library.
   description: |
     Pycairo is a Python module providing bindings for the cairo graphics library.
