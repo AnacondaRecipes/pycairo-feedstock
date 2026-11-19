@@ -34,7 +34,8 @@ requirements:
     - pytest >=8.3.0,<10  # for testing during the build
     - flake8 >=7.0.0,<8  # for testing during the build
   run:
-    - cairo >=1.18.4,<2.0a0
+    # cairo's run export from the host requirement supplies the constraint
+    # (cairo >=1.18.6,<2.0a0); a second hard pin here duplicated the dep.
     - python
 
 test:
