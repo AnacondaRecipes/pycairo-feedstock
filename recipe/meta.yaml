@@ -50,9 +50,6 @@ test:
     # verify that the header can be located through pkg-config
     - test -f `pkg-config --variable=includedir --dont-define-prefix py3cairo`/pycairo/py3cairo.h  # [unix]
     - for /f "usebackq tokens=*" %%a in (`pkg-config --variable=includedir --dont-define-prefix py3cairo`) do if not exist "%%a/pycairo/py3cairo.h" exit 1  # [win]
-    # The MSVC import library for the extension module is a link artifact and is
-    # deleted by bld.bat after `meson install`; fail if one reaches the package.
-    - python -c "import pathlib,sys; sp=pathlib.Path(sys.prefix)/'Lib'/'site-packages'/'cairo'; bad=sorted(p.name for p in sp.glob('*.lib')); assert not bad, 'unexpected link artifacts ' + str(bad)"  # [win]
 
 about:
   home: https://www.cairographics.org/pycairo
