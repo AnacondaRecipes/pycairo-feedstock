@@ -1,5 +1,5 @@
 {% set name = "pycairo" %}
-{% set version = "1.29.1" %}
+{% set version = "1.29.2" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/pygobject/pycairo/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 4fbd26b4af24c9787d84cf5448e34eb8dca064b732479aaecd03109520eebd5f
+  sha256: 3e69fff74fe64f5ba2dfa31f67c6bdf26413342574047437d2ac520d35e9a489
   patches:  # [win]
     - patches/exclude-failing-win-test.patch  # [win]
 
@@ -29,11 +29,13 @@ requirements:
     - meson-python >=0.16.0
     - poetry-core >=2.2
     - cairo {{ cairo }}
-    - glib {{ glib }}
+    # No glib here: pycairo binds cairo only, and the installed cairo.pc has no
+    # Requires line, so a host glib only injected an unused libglib run export.
     - pytest >=8.3.0,<10  # for testing during the build
     - flake8 >=7.0.0,<8  # for testing during the build
   run:
-    - cairo >=1.18.4,<2.0a0
+    # cairo's run export from the host requirement supplies the constraint
+    # (cairo >=1.18.6,<2.0a0); a second hard pin here duplicated the dep.
     - python
 
 test:
@@ -56,7 +58,7 @@ about:
     - COPYING
     - COPYING-LGPL-2.1
     - COPYING-MPL-1.1
-  license_family: LGPL
+  license_family: Other
   summary: Python bindings for the Cairo graphics library.
   description: |
     Pycairo is a Python module providing bindings for the cairo graphics library.
